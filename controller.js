@@ -25,13 +25,9 @@ export class Controller {
             $(`<pre class = "gpSet" id = "gpInfo${connIdx}"></pre>`).insertAfter($(insertAfter));
             $(".gpSet").css({ "margin": "0" });
             $(`#gpInfo${connIdx}`).html(`Gamepad${connIdx} connected: ${this.gamepadSet[connIdx].id}`);
-            setTimeout(() => {
-                (gamepads.length == 1)
-                    ? $(`<pre id = "ctrlInfo${connIdx}" class="ctrlInfo"></pre>`).insertAfter($(".gpSet").last())
-                    : $(`<pre id = "ctrlInfo${connIdx}" class="ctrlInfo"></pre>`).insertAfter($(".ctrlInfo"));
-
-            }, 100);
-
+            (gamepads.length == 1)
+                ? $(`<pre id = "ctrlInfo${connIdx}" class="ctrlInfo"></pre>`).insertAfter($(".gpSet").last())
+                : $(`<pre id = "ctrlInfo${connIdx}" class="ctrlInfo"></pre>`).insertAfter($(".ctrlInfo"));
         });
 
         /*
@@ -68,6 +64,7 @@ export class Controller {
                     }
                 });
                 $(`#ctrlInfo${j}`).html(str[j]);
+                console.log(str[j]);
             }
         });
         window.requestAnimationFrame(() => { this.testLoop(); });
