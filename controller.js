@@ -18,7 +18,8 @@ export class Controller {
          * add gamepad obj into array, insert pre tags for displaying input device string  
          */
         window.addEventListener("gamepadconnected", (e) => {
-            this.gamepadSet.push(navigator.getGamepads()[e.gamepad.index]);
+            var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
+            this.gamepadSet.push(gamepads[e.gamepad.index]);
             let connIdx = e.gamepad.index;
             let insertAfter = (connIdx > 0) ? `#gpInfo${connIdx - 1}` : "h1";
             $(`<pre class = "gpSet" id = "gpInfo${connIdx}"></pre>`).insertAfter($(insertAfter));
