@@ -27,7 +27,7 @@ export class Controller {
             $(`#gpInfo${connIdx}`).html(`Gamepad${connIdx} connected: ${this.gamepadSet[connIdx].id}`);
             (gamepads.length == 1)
                 ? $(`<pre id = "ctrlInfo${connIdx}" class="ctrlInfo"></pre>`).insertAfter($(".gpSet").last())
-                : $(`<pre id = "ctrlInfo${connIdx}" class="ctrlInfo"></pre>`).insertAfter($(".ctrlInfo"));
+                : $(`<pre id = "ctrlInfo${connIdx}" class="ctrlInfo"></pre>`).insertAfter($(".ctrlInfo").last());
         });
 
         /*
