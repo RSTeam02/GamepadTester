@@ -64,7 +64,6 @@ export class Controller {
                     }
                 });
                 $(`#ctrlInfo${j}`).html(str[j]);
-                console.log(str[j]);
             }
         });
         window.requestAnimationFrame(() => { this.testLoop(); });
