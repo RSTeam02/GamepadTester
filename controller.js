@@ -48,25 +48,31 @@ export class Controller {
      * display every input of one or many gamecontroller device(s) in a requestAnim-loop
      * 
      */
-    testLoop() {
-        var str = [];
-        this.gamepadSet.forEach((gamepad, j) => {
-            if (gamepad !== undefined) {
-                str[j] = "";
-                gamepad.axes.forEach((axis, i) => {
-                    if (axis !== 0) {
-                        str[j] += `\nGamepad${gamepad.index}: axis${i}: ${axis}`;
-                    }
-                });
-                gamepad.buttons.forEach((button, i) => {
-                    if (button.pressed) {
-                        str[j] += `\nGamepad${gamepad.index}: Pressed Button${i}`;
-                    }
-                });
-                $(`#ctrlInfo${j}`).html(str[j]);
+    testLoop() {        
+        if (this.gamepadSet.length !== 0) {
+            let str = [];
+            this.gamepadSet.forEach((gamepad) => {
+               this.ctrlInfo(gamepad, str);
+            });
+        }
+        window.requestAnimationFrame(() => { this.testLoop(); });
+    }
+
+
+    ctrlInfo(gamepad, str){
+        let currIdx = gamepad.index;
+        str[currIdx] = "";
+        gamepad.axes.forEach((axis, i) => {
+            if (axis !== 0) {
+                str[currIdx] += `\nGamepad${currIdx}: axis${i}: ${axis}`;
             }
         });
-        window.requestAnimationFrame(() => { this.testLoop(); });
+        gamepad.buttons.forEach((button, i) => {
+            if (button.pressed) {
+                str[currIdx] += `\nGamepad${currIdx}: Pressed Button${i}`;
+            }
+        });
+        $(`#ctrlInfo${currIdx}`).html(str[currIdx]);
     }
 
 }
