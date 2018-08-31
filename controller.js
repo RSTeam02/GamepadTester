@@ -40,6 +40,7 @@ export class Controller {
             $(`#gpInfo${disconnIdx}`).html(`Gamepad${disconnIdx} disconnected`);
             setTimeout(() => {
                 $(`#gpInfo${disconnIdx}`).remove();
+                $(`#ctrlInfo${disconnIdx}`).remove();
             }, 1000);
         });
     }
