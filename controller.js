@@ -6,10 +6,9 @@ export class Controller {
      * 
      */
     constructor() {
-        this.gamepadSet = [];
+    
         this.gamePadListener();
         this.testLoop();
-
     }
 
     gamePadListener() {
@@ -18,13 +17,12 @@ export class Controller {
          * add gamepad obj into array, insert pre tags for displaying input device string  
          */
         window.addEventListener("gamepadconnected", (e) => {
-            var gamepads = navigator.getGamepads ? navigator.getGamepads() : (navigator.webkitGetGamepads ? navigator.webkitGetGamepads : []);
-            this.gamepadSet.push(gamepads[e.gamepad.index]);
+            var gamepads = navigator.getGamepads();  
             let connIdx = e.gamepad.index;
             let insertAfter = (connIdx > 0) ? `#gpInfo${connIdx - 1}` : "h1";
             $(`<pre class = "gpSet" id = "gpInfo${connIdx}"></pre>`).insertAfter($(insertAfter));
             $(".gpSet").css({ "margin": "0" });
-            $(`#gpInfo${connIdx}`).html(`Gamepad${connIdx} connected: ${this.gamepadSet[connIdx].id}`);
+            $(`#gpInfo${connIdx}`).html(`Gamepad${connIdx} connected: ${gamepads[connIdx].id}`);
             (gamepads.length == 1)
                 ? $(`<pre id = "ctrlInfo${connIdx}" class="ctrlInfo"></pre>`).insertAfter($(".gpSet").last())
                 : $(`<pre id = "ctrlInfo${connIdx}" class="ctrlInfo"></pre>`).insertAfter($(".ctrlInfo").last());
@@ -35,8 +33,7 @@ export class Controller {
          * delete (splice) gamepad obj from array by input device index and remove pre tags related to it
          */
         window.addEventListener("gamepaddisconnected", (e) => {
-            let disconnIdx = e.gamepad.index;
-            this.gamepadSet.splice(disconnIdx, 1);
+            let disconnIdx = e.gamepad.index;   
             $(`#gpInfo${disconnIdx}`).html(`Gamepad${disconnIdx} disconnected`);
             setTimeout(() => {
                 $(`#gpInfo${disconnIdx}`).remove();
@@ -49,10 +46,11 @@ export class Controller {
      * display every input of one or many gamecontroller device(s) in a requestAnim-loop
      * 
      */
-    testLoop() {        
-        if (this.gamepadSet.length !== 0) {
+    testLoop() {  
+        let gamepads = navigator.getGamepads();      
+        if (gamepads.length !== 0) {
             let str = [];
-            this.gamepadSet.forEach((gamepad) => {
+            gamepads.forEach((gamepad) => {
                this.ctrlInfo(gamepad, str);
             });
         }
